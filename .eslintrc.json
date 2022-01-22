@@ -1,11 +1,17 @@
 {
   "root": true,
-  "ignorePatterns": ["projects/**/*"],
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": [
+        "*.ts"
+      ],
       "parserOptions": {
-        "project": ["tsconfig.json"],
+        "project": [
+          "tsconfig.json"
+        ],
         "createDefaultProgram": true
       },
       "extends": [
@@ -13,7 +19,9 @@
         "plugin:prettier/recommended"
       ],
       "rules": {
-        "@typescript-eslint/array-type": ["error"],
+        "@typescript-eslint/array-type": [
+          "error"
+        ],
         "@typescript-eslint/consistent-type-assertions": [
           "error",
           {
@@ -24,14 +32,18 @@
           "error",
           {
             "selector": "interface",
-            "format": ["PascalCase"],
+            "format": [
+              "PascalCase"
+            ],
             "custom": {
               "regex": "^I[A-Z]",
               "match": true
             }
           }
         ],
-        "@typescript-eslint/explicit-member-accessibility": ["error"],
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error"
+        ],
         "import/no-unresolved": "off",
         "import/no-extraneous-dependencies": "off",
         "import/prefer-default-export": "off",
@@ -39,9 +51,18 @@
         "class-methods-use-this": "off",
         "lines-between-class-members": "off",
         "no-return-assign": "off",
-        "no-param-reassign": ["error", { "props": false }],
-        "no-plusplus": ["off"],
-        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "no-param-reassign": [
+          "error",
+          {
+            "props": false
+          }
+        ],
+        "no-plusplus": [
+          "off"
+        ],
+        "@typescript-eslint/no-unused-vars": [
+          "off"
+        ],
         "@typescript-eslint/unbound-method": "off",
         "import/no-cycle": "off",
         "import/extensions": "off",
@@ -49,7 +70,9 @@
       }
     },
     {
-      "files": ["*.js"],
+      "files": [
+        "*.js"
+      ],
       "parserOptions": {
         "ecmaVersion": 2020
       },
