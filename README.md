@@ -6,7 +6,7 @@ After your git clone this repository run:
 
 `npm ci --legacy-peer-deps`
 
-This will install all of the node_modules and not mess with the package-lock.json file.
+This will install all the node_modules and not mess with the package-lock.json file.
 
 **DO NOT EVER RUN `npm install` ON THIS PROJECT**
 
@@ -38,7 +38,7 @@ Basic structure of commit message: `type(scope): title`
 
 `scope` is a task number from jira - like AL-9999.
 
-If you use Mac OS please check that you have right access to excute hooks. If need please change
+If you use Mac OS please check that you have right accessed to execute hooks. If need please change
 
 ```
 chmod a+x .husky/pre-commit
