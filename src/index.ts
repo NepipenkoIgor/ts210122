@@ -1,58 +1,75 @@
 import '../assets/css/style.css';
-import { AnimationEnum } from './header.interface';
 
-// let a: 1 | 2 | 3 = 1;
-
-// export type AnimationType = 'ease' | 'ease1';
-// export type AnimationDirection = 'in' | 'out';
-//
-// export interface IOptions {
-// 	delay: number;
-// 	// type: `${AnimationType}-${AnimationDirection}`;
-// 	// type: `${string}-in`;
-// 	type: AnimationEnum;
+// function sum(_a: number, _b: number) {
+// 	// ....
 // }
 //
-// export function animate(opt: IOptions) {
-// 	if (opt.type === 'ease-in') {
-// 	}
-// }
-//
-// animate({ delay: 100, type: AnimationEnum.EASE_IN });
+// sum(1, 2);
+// sum(3, 4);
 
-// interface IFact {
-// 	factId: number;
-// 	userId: string;
-// 	male: boolean;
-// 	// factValue: unknown;
+// interface/type/function/class
+
+// interface IAccount<id, info extends { male: boolean } = { male: boolean }> {
+// 	id: id;
+// 	name: string;
+// 	info: info;
 // }
 //
-// const dataList: { action: string; data: IFact }[] = [];
+// // interface IAdmin {
+// // 	id: number;
+// // 	name: string;
+// // }
 //
-// const uniqueValue = (): keyof IFact => {
-// 	//  'factId' | 'userId' |  'useTo' |'factValue'
-// 	return 'factId';
+// let user: IAccount<string> = {
+// 	id: 'asdasd123123',
+// 	name: 'Ihor',
+// 	info: {
+// 		male: true,
+// 	},
 // };
 //
-// dataList.map((item: { action: string; data: IFact }) => {
-// 	if (item.data[uniqueValue()] === 2) {
-// 		//....
-// 	}
-// 	return item;
-// });
+// let admin: IAccount<number, { male: boolean; subject: string[] }> = {
+// 	id: 12313,
+// 	name: 'Elena',
+// 	info: {
+// 		male: false,
+// 		subject: ['ts', 'js'],
+// 	},
+// };
 //
-// let v: IFact[keyof IFact] = () => {}; // number | string | boolean
+// [1, 2, 3, 4].reduce((str: string, item: number) => {
+// 	return `${str},${item.toString()}`;
+// }, '');
 
-const values = Object.keys(AnimationEnum).map((item: string) => {
-	return AnimationEnum[item as keyof typeof AnimationEnum];
-});
+interface IUser {
+	name: string;
+	age: number;
+}
 
-// interface IAccount {
-// 	name: string;
-// 	surname: string;
-// 	age: number;
-// 	male: boolean;
-// }
-//
-// type IAccountKeys = 'name' | 'surname' | 'age' | 'male';
-// let key: IAccount[keyof IAccount] = 'male'; // 'name'  ....
+interface IProduct {
+	name: string;
+	price: number;
+}
+
+interface IState {
+	user: IUser;
+	products: IProduct[];
+	bonuses: number;
+}
+
+type Select<T> = <F extends keyof T>(state: T, field: F) => T[F];
+
+const state: IState = {
+	user: { name: 'Ihor', age: 36 },
+	products: [
+		{ name: 'IPhone X', price: 50 },
+		{ name: 'IPad', price: 30 },
+	],
+	bonuses: 0.8,
+};
+
+const select: Select<IState> = (storeState, fields) => storeState[fields];
+
+const user: IUser = select(state, 'user');
+const products: IProduct[] = select(state, 'products');
+const bonuses: number = select(state, 'bonuses');
