@@ -1,113 +1,145 @@
-import '../assets/css/style.css';
+// import '../assets/css/style.css';
 
-// function average(a: number, b: number, c: number): string {
-// 	const avg: number = (a + b + c) / 3;
-// 	return `Average is ${avg}`;
-// }
+interface IPoint {
+	x: sn;
 
-// function average(a: number, b?: number, c?: number): string {
-// 	if (b === undefined) {
-// 		// eslint-disable-next-line no-param-reassign
-// 		b = 0;
-// 	}
-// 	if (c === undefined) {
-// 		// eslint-disable-next-line no-param-reassign
-// 		c = 0;
-// 	}
-// 	const avg: number = (a + b + c) / 3;
-// 	return `Average is ${avg}`;
-// }
+	sum(): number;
+}
 
-// function average(a: number, b: number = 0, c: number = 0): string {
-// 	const avg: number = (a + b + c) / 3;
-// 	return `Average is ${avg}`;
-// }
 type sn = string | number;
 
-function isString(arg: sn): arg is string {
-	return typeof arg === 'string';
+type Constructable = new (...args: any) => any;
+
+function Timestamped<BaseClass extends Constructable>(BC: BaseClass) {
+	return class extends BC {
+		public timestamp = Date.now();
+	};
 }
 
-function average(a: string, b: number): string;
-function average(a: number, b: string): string;
-function average(a: number, b: number, c: number): string;
-function average(...args: sn[]): string {
-	let total: number = 0;
-	for (const arg of args) {
-		//const isString = typeof arg === 'string';
-		if (isString(arg)) {
-			total += Number(arg);
-			continue;
-		}
-		total += arg;
+function Tagged<BaseClass extends Constructable>(BC: BaseClass) {
+	return class extends BC {
+		public tags = ['ts', 'js'];
+	};
+}
+
+class BasePoint implements IPoint {
+	#p: number = 3;
+
+	public constructor(x: string, y: number, z: number);
+	public constructor(x: number, y: string, z: number);
+	public constructor(public x: sn, protected y: sn, private z: number) {}
+
+	public sum(): number {
+		return Number(this.x) + Number(this.y) + this.z + this.#p;
 	}
-	const avg: number = total / args.length;
-	return `Average is ${avg}`;
 }
 
-// average(1, 1);
-// average(1, 2);
-// average('1', '2');
-// average(1, '2');
-// average('2', 1);
-// average(1, 2, 32, 3, 4, 5);
-// average(1, 2, 32, 3, 4, 5, 1231, 123);
-// average(1, 2, '2');
-// const b: number = average(1, 2, 3);
+class Point extends Tagged(Timestamped(BasePoint)) {
+	public constructor(x: number, y: string, z: number) {
+		super(x, y, z);
+	}
 
-// interface IAdmin {
-// 	name: string;
-// 	subject: string[];
-// }
+	public override sum(): number {
+		// do something
+		return super.sum();
+	}
+}
+
+const p1: Point = new Point(1, '2', 1);
+console.log(p1);
+
+// class Singleton {
+// 	private static instance: Singleton;
 //
-// interface IUser {
-// 	name: string;
-// 	age: string;
-// }
+// 	private constructor() {}
 //
-// function isUser(person: IUser | IAdmin): person is IUser {
-// 	return 'age' in person;
-// }
-//
-// function doSomeThing(person: IUser | IAdmin) {
-// 	if(isUser(person)){
-// 		person.
-// 	}else  {
-// 		person.
+// 	public static getInstance(): Singleton {
+// 		if (!Singleton.instance) {
+// 			Singleton.instance = new Singleton();
+// 		}
+// 		return Singleton.instance;
 // 	}
 // }
+//
+// const inst1 = Singleton.getInstance();
+// const inst2 = Singleton.getInstance();
+// const inst3 = Singleton.getInstance();
+// const inst4 = Singleton.getInstance();
+// const inst5 = Singleton.getInstance();
 
-// function test(show: true): { test: number; value: () => string };
-// function test(show: false): { test: number };
-// function test(show: boolean) {
-// 	if (show) {
-// 		return {
-// 			test: 1,
-// 			value: () => '1',
-// 		};
-// 	}
-// 	return {
-// 		test: 1,
-// 	};
-// }
-//
-// test(true);
-// test(false);
+class Singleton {
+	public static instance: Singleton;
 
-// function getFullName(this: { name: string; surname: string }) {
-// 	return `${this.surname}${divider}${this.surname}`;
-// }
-//
-// let account = {
-// 	name: 'Ihor',
-// 	surname: 'Nepipenko',
-// 	getFullName,
-// };
-//
-// account.getFullName();
-//
-// document.addEventListener<'click'>('click', getFullName);
-//
-// class P {
-// 	public handler(this: this) {}
-// }
+	public x: number = 1;
+
+	static {
+		console.log('static block');
+		Singleton.instance = new Singleton();
+	}
+
+	public constructor() {
+		console.log('init');
+		if (Singleton.instance) {
+			return Singleton.instance;
+		}
+	}
+
+	public getX() {
+		return this.x;
+	}
+}
+
+const inst1 = new Singleton();
+const inst2 = new Singleton();
+const inst3 = new Singleton();
+const inst4 = new Singleton();
+const inst5 = new Singleton();
+
+console.log(Singleton.instance);
+console.log(inst1);
+console.log(Singleton.instance === inst3);
+console.log(inst1 === inst4);
+console.log(inst2 === inst5);
+
+abstract class AbstractControl<T> {
+	public abstract model: T;
+
+	public abstract getModel(): T;
+
+	public onFocus() {
+		// do something
+	}
+
+	public onBlur() {
+		// do something
+	}
+}
+
+abstract class AbstractControlWithSet<T> extends AbstractControl<T> {
+	public abstract setModel(model: T): void;
+}
+
+class MHInputControl extends AbstractControlWithSet<string> {
+	public model = '';
+
+	public override getModel(): string {
+		return '';
+	}
+
+	public override setModel(_model: string) {}
+}
+
+interface IDropDownItem {
+	text: string;
+	value: string | number;
+}
+
+class MHDropDownControl extends AbstractControlWithSet<IDropDownItem[]> {
+	public model: IDropDownItem[] = [];
+
+	public override getModel(): IDropDownItem[] {
+		return [];
+	}
+
+	public override setModel(_model: IDropDownItem[]) {}
+}
