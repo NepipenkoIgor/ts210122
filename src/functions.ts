@@ -22,16 +22,16 @@ import '../assets/css/style.css';
 // 	const avg: number = (a + b + c) / 3;
 // 	return `Average is ${avg}`;
 // }
-type sn = string | number;
+export type sn = string | number;
 
-function isString(arg: sn): arg is string {
+export function isString(arg: sn): arg is string {
 	return typeof arg === 'string';
 }
 
-function average(a: string, b: number): string;
-function average(a: number, b: string): string;
-function average(a: number, b: number, c: number): string;
-function average(...args: sn[]): string {
+export function average(a: string, b: number): string;
+export function average(a: number, b: string): string;
+export function average(a: number, b: number, c: number): string;
+export function average(...args: sn[]): string {
 	let total: number = 0;
 	for (const arg of args) {
 		//const isString = typeof arg === 'string';
